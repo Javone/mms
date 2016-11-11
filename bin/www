@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+//上面那句话是shell脚本执行解析执行器的
+var app = require('../app');
+var config = require('../config/config');
+var waterline = require('../config/waterline');
+
+//在express监听之前完成waterline的初始化,所以express监听要写在回调函数里
+waterline.orm.initialize(waterline.wlconfig, function (err, models) {
+    if (err) {
+        console.log('waterline initialize failed,err:', err);
+        return;
+    }
+    app.set('models',models.collections);//类似于localStorage,为的是能够在express实例(app)里,操作models
+    app.listen(config.port, function () {
+        console.log('app started ,listening on port:', config.port);
+    });
+});
+

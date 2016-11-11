@@ -1,0 +1,26 @@
+{
+  "name": "mms",
+  "description": "man management system",
+  "main": "index.html",
+  "authors": [
+    "Johnson"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "man",
+    "management",
+    "system"
+  ],
+  "homepage": "https://github.com/Johnson-hd/mms",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "admin-lte": "2.3.2"
+  }
+}
