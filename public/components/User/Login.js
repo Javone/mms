@@ -85,9 +85,7 @@ var Login = React.createClass({
     render: function () {
         return (
             <div className="login-box" onKeyUp={this.handleKeyLogin}>
-                <div className="login-logo">
-                    <b>H5</b>管理后台
-                </div>
+                <div className="login-logo">人员管理系统</div>
                 <div className="login-box-body">
                     <div>
                         <div className="form-group has-feedback">

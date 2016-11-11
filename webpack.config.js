@@ -12,10 +12,26 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');//自动化css独
  * Const
  ******************************************************************************/
 
+//判断运行环境是development还是production
+const ENV = process.env.NODE_ENV || "development";
+const DEBUG = ENV == "development";
+
+//热加载域名端口
+const HOST = 'localhost';
+const PORT = 3000;
 
 /******************************************************************************
  * functions
  ******************************************************************************/
+
+//构建热加载的入口文件
+function build_entry_point(entryPoint) {
+    return [
+        'webpack-dev-server/client?http://' + HOST + ':' + PORT,
+        'webpack/hot/only-dev-server',
+        entryPoint
+    ]
+}
 
 //构建css路径
 function build_css_path(path) {
@@ -26,17 +42,40 @@ function build_css_path(path) {
  * config webpack
  ******************************************************************************/
 
-var entry = {
-    index: __dirname + '/public/index.js'
-};
-var output = {
-    path: __dirname + '/public/build/',
-    filename: 'js/[name].js',
-    chunkFilename: 'js/[name].chunk.js'
-};
+var entry, output;
+
+if (DEBUG) {
+
+    console.log("-------IN DEBUG MODE ----------");
+
+    entry = {
+        index: build_entry_point(__dirname + '/public/index.js')
+    };
+    output = {
+        path: __dirname + '/public/build/',
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].chunk.js',//chunkFilename是非主入口的文件名,参考http://blog.csdn.net/zhbhun/article/details/46826129
+        publicPath: 'http://' + HOST + ':' + PORT + '/build/',
+        hostName: HOST
+    };
+} else {
+
+    console.log("-------IN PRODUCTION MODE ----------");
+
+    entry = {
+        index: __dirname + '/public/index.js'
+    };
+    output = {
+        path: __dirname + '/public/build/',
+        filename: 'js/[name].js',
+        chunkFilename: 'js/[name].chunk.js'
+    };
+}
 
 
 var plugins = [
+
+    new webpack.HotModuleReplacementPlugin(),//热加载插件
 
     new CommonsPlugin({ //提取公用js插件
         name: 'common',
@@ -51,6 +90,7 @@ var plugins = [
 var config = {
     entry: entry,
     output: output,
+    port: PORT,
     plugins: plugins,
     resolve: {
         root: Path.resolve(__dirname) + '/public/',//resolve.root 表示添加默认搜索路径
@@ -61,8 +101,8 @@ var config = {
             UserRoute: 'configs/Route',//user路由配置
             CommonFun: 'configs/CommonFun',//公用方法
             Api: 'configs/Api',//请求方法
-            HeaderLayout: 'layouts/HeaderLayout',//Header布局
-            SidebarLayout: 'layouts/SidebarLayout'//Sidebar布局
+            HeaderLayout:'layouts/HeaderLayout',//Header布局
+            SidebarLayout:'layouts/SidebarLayout'//Sidebar布局
         }
     },
     module: {
