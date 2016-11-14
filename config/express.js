@@ -19,7 +19,7 @@ module.exports = function () {
     });
 
     //导入路由
-    require('../app/routes/post.server.routes')(app);
+    require('../app/routes/user.server.routes')(app);
 
     //以中间件的方式自定义响应函数  try-catch:防止重复返回
     app.use(function (req, res, next) {

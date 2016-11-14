@@ -35,10 +35,10 @@ var Login = React.createClass({
      * event handlers
      ******************************************************************************/
     handleClickLogin: function () {
-        let loginName = this.state.User.loginName;
+        let login_name = this.state.User.login_name;
         let password = this.state.User.password;
         let self = this;
-        if (loginName == '') {
+        if (login_name == '') {
             alert("请填写登录名");
             return false;
         } else if (password == '') {
@@ -46,7 +46,7 @@ var Login = React.createClass({
             return false;
         } else {
             self.loginAPI(this.state.User, function (data) {
-                data.user.date = self.dateTransform(data.user.date.time);
+                data.user.entry_date = self.dateTransform(data.user.date.entry_date);
                 self.setState({
                    User:objectAssign(self.state.User,data.user)
                 });
@@ -64,7 +64,7 @@ var Login = React.createClass({
     },
     handleChangeName: function (event) {
         let param = {
-            loginName:event.target.value
+            login_name:event.target.value
         };
         this.setState({
             User:objectAssign(this.state.User,param)

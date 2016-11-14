@@ -7,13 +7,13 @@ const initialProps = {
      * 用户相关
      ******************************************************************************/
     User: {
-        loginName: '',
+        login_name: '',
         password:'',
         name:'',
         age:'',
         gender:'',
         position:'',
-        date:''
+        entry_date:''
     },
     UserList:[]
 
