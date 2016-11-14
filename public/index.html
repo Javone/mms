@@ -11,6 +11,7 @@
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"/>
     <link href="build/css/AdminLTE.min.css" rel="stylesheet"/>
     <link href="build/css/AdminLTESkin.min.css" rel="stylesheet"/>
+    <link href="build/css/datepicker.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="skin-purple-light sidebar-mini">
@@ -22,6 +23,15 @@
 <script src="build/js/jquery.js"></script>
 <script src="build/js/bootstrap.js"></script>
 <script src="build/js/AdminLTE.js"></script>
+<script src="build/js/datepicker.js"></script>
 <script src="http://localhost:3000/build/js/common.js"></script>
 <script src="http://localhost:3000/build/js/index.js"></script>
+<script>
+    $(function () {
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+    });
+</script>
 </html>

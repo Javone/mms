@@ -78,6 +78,9 @@ var Login = React.createClass({
             User:objectAssign(this.state.User,param)
         });
     },
+    handleClickRegister:function () {
+        this.props.history.push(UserRoute.Register);
+    },
 
     /******************************************************************************
      * render functions
@@ -108,8 +111,8 @@ var Login = React.createClass({
                                         style={{margin: '0 auto', width: '100px'}}
                                         onClick={this.handleClickLogin}>登录
                                 </button>
+                                <button onClick={this.handleClickRegister}>测试注册入口</button>
                             </div>
-
                         </div>
                     </div>
                 </div>

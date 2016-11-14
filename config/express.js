@@ -21,6 +21,10 @@ module.exports = function () {
     //导入路由
     require('../app/routes/user.server.routes')(app);
 
+    app.use('*.page',function (req, res) {
+        res.sendfile('public/index.html');
+    });
+
     //以中间件的方式自定义响应函数  try-catch:防止重复返回
     app.use(function (req, res, next) {
         res.status(404);
@@ -29,7 +33,6 @@ module.exports = function () {
         } catch (e) {
             console.error('404 set header after sent');
         }
-
     });
 
     //统一处理错误
@@ -41,7 +44,6 @@ module.exports = function () {
         } catch (e) {
             console.error('500 set header after sent');
         }
-
     });
     return app;
 };

@@ -7866,13 +7866,14 @@ webpackJsonp([0,1],[
 	 */
 
 	var Login = __webpack_require__(388),
-	    HomePage = __webpack_require__(398);
+	    Register = __webpack_require__(398),
+	    HomePage = __webpack_require__(399);
 
 	/******************************************************************************
 	 router
 	 ******************************************************************************/
 
-	var routes = _react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory }, _react2.default.createElement(_reactRouter.Route, { path: "/", component: Login }), _react2.default.createElement(_reactRouter.Route, { path: _UserRoute.UserRoute.Login, component: Login }), _react2.default.createElement(_reactRouter.Route, { path: _UserRoute.UserRoute.HomePage, component: HomePage }), _react2.default.createElement(_reactRouter.Route, { path: "*", component: Login }));
+	var routes = _react2.default.createElement(_reactRouter.Router, { history: _reactRouter.browserHistory }, _react2.default.createElement(_reactRouter.Route, { path: "/", component: Login }), _react2.default.createElement(_reactRouter.Route, { path: _UserRoute.UserRoute.Login, component: Login }), _react2.default.createElement(_reactRouter.Route, { path: _UserRoute.UserRoute.Register, component: Register }), _react2.default.createElement(_reactRouter.Route, { path: _UserRoute.UserRoute.HomePage, component: HomePage }), _react2.default.createElement(_reactRouter.Route, { path: "*", component: Login }));
 
 	/******************************************************************************
 	 bind redux
@@ -35150,8 +35151,9 @@ webpackJsonp([0,1],[
 	 */
 
 	exports.UserRoute = {
-	  Login: '/login.page',
-	  HomePage: '/home-page.page'
+	    Login: '/login.page',
+	    Register: '/register.page',
+	    HomePage: '/home-page.page'
 	};
 
 	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(322); if (makeExportsHot(module, __webpack_require__(156))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "Route.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
@@ -38667,10 +38669,10 @@ webpackJsonp([0,1],[
 	     * event handlers
 	     ******************************************************************************/
 	    handleClickLogin: function handleClickLogin() {
-	        var loginName = this.state.User.loginName;
+	        var login_name = this.state.User.login_name;
 	        var password = this.state.User.password;
 	        var self = this;
-	        if (loginName == '') {
+	        if (login_name == '') {
 	            alert("请填写登录名");
 	            return false;
 	        } else if (password == '') {
@@ -38678,7 +38680,7 @@ webpackJsonp([0,1],[
 	            return false;
 	        } else {
 	            self.loginAPI(this.state.User, function (data) {
-	                data.user.date = self.dateTransform(data.user.date.time);
+	                data.user.entry_date = self.dateTransform(data.user.date.entry_date);
 	                self.setState({
 	                    User: objectAssign(self.state.User, data.user)
 	                });
@@ -38696,7 +38698,7 @@ webpackJsonp([0,1],[
 	    },
 	    handleChangeName: function handleChangeName(event) {
 	        var param = {
-	            loginName: event.target.value
+	            login_name: event.target.value
 	        };
 	        this.setState({
 	            User: objectAssign(this.state.User, param)
@@ -38709,6 +38711,9 @@ webpackJsonp([0,1],[
 	        this.setState({
 	            User: objectAssign(this.state.User, param)
 	        });
+	    },
+	    handleClickRegister: function handleClickRegister() {
+	        this.props.history.push(_UserRoute.UserRoute.Register);
 	    },
 
 	    /******************************************************************************
@@ -38723,7 +38728,7 @@ webpackJsonp([0,1],[
 	            placeholder: "\u8BF7\u8F93\u5165\u5BC6\u7801",
 	            onChange: this.handleChangePassword }), React.createElement("span", { className: "glyphicon glyphicon-lock form-control-feedback" })), React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-xs-12" }, React.createElement("button", { className: "btn btn-primary btn-block btn-flat",
 	            style: { margin: '0 auto', width: '100px' },
-	            onClick: this.handleClickLogin }, "\u767B\u5F55"))))));
+	            onClick: this.handleClickLogin }, "\u767B\u5F55"), React.createElement("button", { onClick: this.handleClickRegister }, "\u6D4B\u8BD5\u6CE8\u518C\u5165\u53E3"))))));
 	    }
 	});
 
@@ -38793,7 +38798,7 @@ webpackJsonp([0,1],[
 
 	    switch (type) {
 	        case 'get':
-	            _superagent2.default.get(url + '.do').query(params).end(function (err, res) {
+	            _superagent2.default.get(url).query(params).end(function (err, res) {
 	                if (!res) {
 	                    alert(err);
 	                    return;
@@ -38815,7 +38820,7 @@ webpackJsonp([0,1],[
 	            });
 	            break;
 	        case 'post':
-	            _superagent2.default.post(url + '.do').send(params).end(function (err, res) {
+	            _superagent2.default.post(url).send(params).end(function (err, res) {
 	                if (!res) {
 	                    alert(err);
 	                    return;
@@ -38846,7 +38851,7 @@ webpackJsonp([0,1],[
 	     * User
 	     ******************************************************************************/
 	    loginAPI: function loginAPI(params, onSuccess, onFailed) {
-	        _request('/api/user/login', 'post', params, onSuccess, onFailed);
+	        _request('/api/login', 'post', params, onSuccess, onFailed);
 	    },
 	    selectUserListByPageAPI: function selectUserListByPageAPI(params, onSuccess, onFailed) {
 	        _request('/api/user/select/list/page', 'post', params, onSuccess, onFailed);
@@ -40489,13 +40494,13 @@ webpackJsonp([0,1],[
 	     * 用户相关
 	     ******************************************************************************/
 	    User: {
-	        loginName: '',
+	        login_name: '',
 	        password: '',
 	        name: '',
 	        age: '',
 	        gender: '',
 	        position: '',
-	        date: ''
+	        entry_date: ''
 	    },
 	    UserList: []
 
@@ -40507,6 +40512,150 @@ webpackJsonp([0,1],[
 
 /***/ },
 /* 398 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(78), RootInstanceProvider = __webpack_require__(86), ReactMount = __webpack_require__(88), React = __webpack_require__(156); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
+
+	"use strict";
+
+	var _Actions = __webpack_require__(389);
+
+	var ItemsActions = _interopRequireWildcard(_Actions);
+
+	var _redux = __webpack_require__(325);
+
+	var _UserRoute = __webpack_require__(321);
+
+	var _reactRedux = __webpack_require__(345);
+
+	var _Api = __webpack_require__(390);
+
+	var _Api2 = _interopRequireDefault(_Api);
+
+	var _CommonFun = __webpack_require__(396);
+
+	var _CommonFun2 = _interopRequireDefault(_CommonFun);
+
+	var _reduxRouter = __webpack_require__(362);
+
+	function _interopRequireDefault(obj) {
+	    return obj && obj.__esModule ? obj : { default: obj };
+	}
+
+	function _interopRequireWildcard(obj) {
+	    if (obj && obj.__esModule) {
+	        return obj;
+	    } else {
+	        var newObj = {};if (obj != null) {
+	            for (var key in obj) {
+	                if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+	            }
+	        }newObj.default = obj;return newObj;
+	    }
+	}
+
+	/**
+	 * Created by houdong on 16/8/26.
+	 */
+
+	var React = __webpack_require__(156);
+
+	var initialParams = __webpack_require__(397).User;
+
+	var objectAssign = __webpack_require__(100);
+
+	var Register = React.createClass({
+	    displayName: "Register",
+
+	    mixins: [_Api2.default, _CommonFun2.default],
+
+	    /******************************************************************************
+	     * life cycle functions
+	     ******************************************************************************/
+	    getDefaultProps: function getDefaultProps() {
+	        return {
+	            User: initialParams
+	        };
+	    },
+	    getInitialState: function getInitialState() {
+	        return {
+	            User: initialParams
+	        };
+	    },
+
+	    /******************************************************************************
+	     * event handlers
+	     ******************************************************************************/
+	    handleClickLogin: function handleClickLogin() {
+	        var login_name = this.state.User.login_name;
+	        var password = this.state.User.password;
+	        var self = this;
+	        if (login_name == '') {
+	            alert("请填写登录名");
+	            return false;
+	        } else if (password == '') {
+	            alert("请填写密码");
+	            return false;
+	        } else {
+	            self.loginAPI(this.state.User, function (data) {
+	                data.user.entry_date = self.dateTransform(data.user.date.entry_date);
+	                self.setState({
+	                    User: objectAssign(self.state.User, data.user)
+	                });
+	                self.props.actions.changeComponentsState(self.state);
+	                self.props.history.push(_UserRoute.UserRoute.HomePage);
+	            }, function (error) {
+	                alert(error);
+	            });
+	        }
+	    },
+	    handleKeyLogin: function handleKeyLogin(event) {
+	        if (event.keyCode == 13) {
+	            this.handleClickLogin();
+	        }
+	    },
+	    handleChangeName: function handleChangeName(event) {
+	        var param = {
+	            login_name: event.target.value
+	        };
+	        this.setState({
+	            User: objectAssign(this.state.User, param)
+	        });
+	    },
+	    handleChangePassword: function handleChangePassword(event) {
+	        var param = {
+	            password: event.target.value
+	        };
+	        this.setState({
+	            User: objectAssign(this.state.User, param)
+	        });
+	    },
+	    handleClickRegister: function handleClickRegister() {},
+
+	    /******************************************************************************
+	     * render functions
+	     ******************************************************************************/
+	    render: function render() {
+	        return React.createElement("section", { className: "content" }, React.createElement("div", { className: "row" }, React.createElement("div", { className: "col-md-6" }, React.createElement("div", { className: "box box-primary" }, React.createElement("div", { className: "box-header with-border" }, React.createElement("h3", { className: "box-title" }, "\u6CE8\u518C\u9875\u9762")), React.createElement("form", { role: "form" }, React.createElement("div", { className: "box-body" }, React.createElement("div", { className: "form-group" }, React.createElement("label", null, "\u767B\u5F55\u540D"), React.createElement("input", { type: "text", className: "form-control", placeholder: "\u767B\u5F55\u7CFB\u7EDF\u7684\u767B\u5F55\u540D" })), React.createElement("div", { className: "form-group" }, React.createElement("label", null, "\u5BC6\u7801"), React.createElement("input", { type: "password", className: "form-control", placeholder: "\u767B\u5F55\u7CFB\u7EDF\u7684\u5BC6\u7801" })), React.createElement("div", { className: "form-group" }, React.createElement("label", null, "\u59D3\u540D"), React.createElement("input", { type: "text", className: "form-control", placeholder: "\u59D3\u540D" })), React.createElement("div", { className: "form-group" }, React.createElement("label", null, "\u6027\u522B"), React.createElement("select", { className: "form-control" }, React.createElement("option", null, "\u7537"), React.createElement("option", null, "\u5973"))), React.createElement("div", { className: "form-group" }, React.createElement("label", null, "\u5E74\u9F84"), React.createElement("input", { type: "text", className: "form-control", placeholder: "\u8BF7\u8F93\u5165\u6574\u6570" })), React.createElement("div", { className: "form-group" }, React.createElement("label", null, "\u5165\u804C\u65E5\u671F"), React.createElement("div", { className: "input-group date" }, React.createElement("div", { className: "input-group-addon" }, React.createElement("i", { className: "fa fa-calendar" })), React.createElement("input", { type: "text", className: "form-control pull-right", id: "datepicker" })))))))));
+	    }
+	});
+
+	module.exports = (0, _reactRedux.connect)(function (state) {
+	    return {
+	        User: state.componentsReducer.User
+	    };
+	}, function (dispatch) {
+	    return {
+	        actions: (0, _redux.bindActionCreators)(ItemsActions, dispatch),
+	        history: (0, _redux.bindActionCreators)({ replace: _reduxRouter.replace, goBack: _reduxRouter.goBack, push: _reduxRouter.push }, dispatch)
+	    };
+	})(Register);
+
+	/* REACT HOT LOADER */ }).call(this); } finally { if (true) { (function () { var foundReactClasses = module.hot.data && module.hot.data.foundReactClasses || false; if (module.exports && module.makeHot) { var makeExportsHot = __webpack_require__(322); if (makeExportsHot(module, __webpack_require__(156))) { foundReactClasses = true; } var shouldAcceptModule = true && foundReactClasses; if (shouldAcceptModule) { module.hot.accept(function (err) { if (err) { console.error("Cannot not apply hot update to " + "Register.js" + ": " + err.message); } }); } } module.hot.dispose(function (data) { data.makeHot = module.makeHot; data.foundReactClasses = foundReactClasses; }); })(); } }
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
+
+/***/ },
+/* 399 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(78), RootInstanceProvider = __webpack_require__(86), ReactMount = __webpack_require__(88), React = __webpack_require__(156); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -40556,9 +40705,9 @@ webpackJsonp([0,1],[
 	var React = __webpack_require__(156);
 
 	var initialParams = __webpack_require__(397).UserList;
-	var classNames = __webpack_require__(399);
-	var HeaderLayout = __webpack_require__(400);
-	var SidebarLayout = __webpack_require__(401);
+	var classNames = __webpack_require__(400);
+	var HeaderLayout = __webpack_require__(401);
+	var SidebarLayout = __webpack_require__(402);
 
 	var HomePage = React.createClass({
 	    displayName: 'HomePage',
@@ -40753,7 +40902,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ },
-/* 399 */
+/* 400 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -40807,7 +40956,7 @@ webpackJsonp([0,1],[
 
 
 /***/ },
-/* 400 */
+/* 401 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(78), RootInstanceProvider = __webpack_require__(86), ReactMount = __webpack_require__(88), React = __webpack_require__(156); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {
@@ -40857,7 +41006,7 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)(module)))
 
 /***/ },
-/* 401 */
+/* 402 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(module) {/* REACT HOT LOADER */ if (true) { (function () { var ReactHotAPI = __webpack_require__(78), RootInstanceProvider = __webpack_require__(86), ReactMount = __webpack_require__(88), React = __webpack_require__(156); module.makeHot = module.hot.data ? module.hot.data.makeHot : ReactHotAPI(function () { return RootInstanceProvider.getRootInstances(ReactMount); }, React); })(); } try { (function () {

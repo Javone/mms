@@ -15,6 +15,7 @@ import persistState from 'redux-localstorage';
 
 
 var Login = require('./components/User/Login'),
+    Register = require('./components/User/Register'),
     HomePage = require('./components/HomePage');
 
 /******************************************************************************
@@ -25,6 +26,7 @@ let routes = (
     <Router history={browserHistory}>
         <Route path='/' component={Login}/>
         <Route path={UserRoute.Login} component={Login}/>
+        <Route path={UserRoute.Register} component={Register}/>
         <Route path={UserRoute.HomePage} component={HomePage}/>
         <Route path="*" component={Login}/>
     </Router>
