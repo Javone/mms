@@ -4,9 +4,13 @@
 var redisClient = require('../../config/redis');
 var Data = {};
 const REDIS_USER = 'user:name';
+const REDIS_LIST = 'user:list';
 //向redis中写入数据,一般创建的时候不会写入,会在第一次从数据库中查询后写入redis,一般会设置redis的过期时间为10分钟,这样会保证与数据库的一致性
-var writeToRedis = function (doc) {
+var userToRedis = function (doc) {
     redisClient.hset(REDIS_USER, doc.login_name, JSON.stringify(doc))
+};
+var listToRedis = function (doc) {
+    redisClient.set(REDIS_LIST,JSON.stringify(doc));
 };
 var count = function (req, res, next) {
     req.models.user.count(function (err,doc) {
@@ -43,12 +47,22 @@ var loginFromDb = function (req, res, next) {
             Data.result = false;
             Data.message = '用户名或密码错误';
         } else {
-            writeToRedis(doc);
+            userToRedis(doc);
             Data.result = true;
             Data.user = doc;
         }
         return res.json(Data);
     });
+};
+var listFromRedis = function (req, res, next) {
+    Data = {};
+    redisClient.get(REDIS_LIST, function (err, doc) {
+        if (err) return next(err);
+        if(!doc) return listFromDb(req,res,next);
+        Data.result = true;
+        Data.list = JSON.parse(doc);
+        count(req,res,next);
+    })
 };
 var listFromDb = function (req, res, next) {
     Data = {};
@@ -61,6 +75,7 @@ var listFromDb = function (req, res, next) {
                 Data.result = false;
                 Data.message = '没有数据';
             }else{
+                listToRedis(doc);
                 Data.result = true;
                 Data.list = doc;
             }
@@ -68,6 +83,12 @@ var listFromDb = function (req, res, next) {
         });
 };
 module.exports = {
+    login: function (req, res, next) {
+        if (!req.body.login_name || !req.body.password) {
+            return next(new Error('params error'));
+        }
+        loginFromRedis(req, res, next);
+    },
     register: function (req, res, next) {
         if (!req.body.login_name || !req.body.password || !req.body.name || !req.body.age || !req.body.gender || !req.body.position || !req.body.entry_date) {
             return next(new Error('params error'));
@@ -87,16 +108,13 @@ module.exports = {
             return res.json(Data);
         });
     },
-    login: function (req, res, next) {
-        if (!req.body.login_name || !req.body.password) {
-            return next(new Error('params error'));
-        }
-        loginFromRedis(req, res, next);
-    },
     list: function (req, res, next) {
         if (!req.body.pageNow || !req.body.pageSize) {
             return next(new Error('params error'));
         }
-        listFromDb(req, res, next);
+        listFromRedis(req, res, next);
+    },
+    name:function (req, res, next) {
+
     }
 };
