@@ -10,8 +10,8 @@ module.exports = function (app) {
         .post(UserController.register);
     app.route('/api/user/list')
         .post(UserController.list);
-    app.route('/api/user/name')
-        .get(UserController.name);
+    app.route('/api/user/:name')
+        .post(UserController.name);
 
 
 };

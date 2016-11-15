@@ -89,17 +89,22 @@ var HomePage = React.createClass({
         if (this.refs.name.value == '') {
             alert('请输入姓名进行查询!');
         } else {
-            this.selectUserByNameAPI(name, function (data) {
-                let pageNum = parseInt(data.count / (self.state.pageSize)) + 1;
+            let param = {
+                name: this.refs.name.value
+            };
+            this.selectUserByNameAPI(param, function (data) {
+                let pageNum = parseInt(1 / (self.state.pageSize)) + 1;
                 let array = [];
                 for (let i = 0; i < pageNum; i++) {
                     let object = {};
                     object.pageNow = i + 1;
                     array.push(object);
                 }
+                let array2= [];
+                array2.push(data.user);
                 self.setState({
-                    UserList: data.list,
-                    count: data.count,
+                    UserList: array2,
+                    count: 1,
                     index: 1,
                     pageNow: 1,
                     pageList: array
