@@ -32,12 +32,12 @@ var HeaderLayout = React.createClass({
                         <ul className="nav navbar-nav">
                             <li className="dropdown user user-menu">
                                 <a href="#" className="dropdown-toggle" data-toggle="dropdown">
-                                    <img src="public/build/images/user2-160x160.jpg" className="user-image" alt="User Image" />
+                                    <img src="build/images/user2-160x160.jpg" className="user-image" alt="User Image" />
                                         <span className="hidden-xs">{this.props.User.name}</span>
                                 </a>
                                 <ul className="dropdown-menu">
                                     <li className="user-header">
-                                        <img src="public/build/images/user2-160x160.jpg" className="img-circle" alt="User Image" />
+                                        <img src="build/images/user2-160x160.jpg" className="img-circle" alt="User Image" />
                                             <p>
                                                 {this.props.User.name} - {this.props.User.position}
                                                 <small>{this.props.User.date}入职</small>

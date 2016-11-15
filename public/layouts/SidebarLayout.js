@@ -26,7 +26,7 @@ var SidebarLayout = React.createClass({
                 <div className="sidebar">
                     <div className="user-panel">
                         <div className="pull-left image">
-                            <img src="public/build/images/user2-160x160.jpg" className="img-circle" alt="User Image"/>
+                            <img src="build/images/user2-160x160.jpg" className="img-circle" alt="User Image"/>
                         </div>
                         <div className="pull-left info">
                             <p>{this.props.User.name}</p>
