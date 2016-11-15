@@ -14,14 +14,17 @@ var wlconfig = {
         default: 'mysql'
     },
     connections: {
-        mongo: {
-            adapter: 'mongo',
-            url: config.mongodb
-        },
+       // mongo: {
+       //      adapter: 'mongo',
+       //      url: config.mongodb
+       //  },
         mysql: {
             adapter: 'mysql',
             url: config.mysql
-        },
+        }
+    },
+    defaults: {
+        migrate: 'safe'//创建的时候不会改动数据库的表,只能我们自己改动
     }
 };
 var orm = new Waterline();//orm是将数据库中的数据转化成程序方便处理的对象,类似于mybatis-generator

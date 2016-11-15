@@ -120,6 +120,7 @@ var Register = React.createClass({
             self.changeStatus('User', param, function () {
                 self.registerAPI(self.state.User, function (data) {
                     alert('注册成功!');
+                    window.location.href = 'login.page';
                 }, function (error) {
                     alert(error);
                 });

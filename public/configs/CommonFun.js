@@ -10,7 +10,7 @@ module.exports = {
     },
     transformDate:function (timestamp) {
         let array = timestamp.split('/');
-        return array[2]+'-'+array[1]+'-'+array[0];
+        return array[2]+'-'+array[0]+'-'+array[1];
     },
     changeStatus: function (type, param,cb=function () {}) {
         this.setState({

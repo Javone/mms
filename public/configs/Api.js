@@ -15,7 +15,7 @@ function _request(url, type = 'post', params = {}, onSuccess, onFailed = functio
                         return;
                     }
                     if (res.statusCode == 401) {
-                        window.location.href = '/login';
+                        window.location.href = '/login.page';
                     } else if (res.statusCode == 200) {
                         if (res.text) {
                             let data = JSON.parse(res.text);
@@ -40,14 +40,13 @@ function _request(url, type = 'post', params = {}, onSuccess, onFailed = functio
                         return;
                     }
                     if (res.statusCode == 401) {
-                        window.location.href = '/login';
+                        window.location.href = '/login.page';
                     } else if (res.statusCode == 200) {
-                        if (res.text) {
-                            let data = JSON.parse(res.text);
-                            if (data.result) {
-                                onSuccess(data.data);
+                        if (res.body) {
+                            if (res.body.result) {
+                                onSuccess(res.body.data);
                             } else {
-                                onFailed(data.data.message);
+                                onFailed(res.body.message);
                             }
                         }
                     } else {

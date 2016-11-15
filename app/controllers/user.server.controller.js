@@ -2,6 +2,7 @@
  * Created by houdong on 16/11/9.
  */
 var redisClient = require('../../config/redis');
+var Data = require('../models/data.server.model');
 
 //从mongodb中拿数据
 var loginFromMongo = function (id, cb) {
@@ -41,7 +42,7 @@ module.exports = {
         if (!req.body.login_name || !req.body.password || !req.body.name || !req.body.age || !req.body.gender || !req.body.position || !req.body.entry_date) {
             return next(new Error('params error'));
         }
-        req.models.post.create({
+        req.models.user.create({
             login_name: req.body.login_name,
             password: req.body.password,
             name: req.body.name,
@@ -51,7 +52,9 @@ module.exports = {
             entry_date: req.body.entry_date,
         }, function (err, doc) {
             if (err) return next(err);
-            return res.json(doc);
+            Data.result = true;
+            Data.data = doc;
+            return res.json(Data);
         });
     },
     login: function (req, res, next) {
