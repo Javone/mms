@@ -3,7 +3,6 @@
  */
 
 var React = require('react');
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 var initialParams = require('InitialProps').User;
 var SidebarLayout = React.createClass({

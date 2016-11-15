@@ -3,7 +3,6 @@
  */
 
 var React = require('react');
-import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 var initialParams = require('InitialProps').User;
 var HeaderLayout = React.createClass({
@@ -40,7 +39,7 @@ var HeaderLayout = React.createClass({
                                         <img src="build/images/user2-160x160.jpg" className="img-circle" alt="User Image" />
                                             <p>
                                                 {this.props.User.name} - {this.props.User.position}
-                                                <small>{this.props.User.date}入职</small>
+                                                <small>{this.props.User.entry_date}入职</small>
                                             </p>
                                     </li>
                                     <li className="user-footer">

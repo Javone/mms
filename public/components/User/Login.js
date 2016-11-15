@@ -45,6 +45,7 @@ var Login = React.createClass({
             return false;
         } else {
             self.loginAPI(this.state.User, function (data) {
+                data.entry_date = self.dateTransform(data.entry_date);
                 self.setState({
                    User:data
                 });

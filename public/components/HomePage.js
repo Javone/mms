@@ -40,7 +40,7 @@ var HomePage = React.createClass({
         }
     },
     componentWillMount: function () {
-        this.handleRefresh();
+        //this.handleRefresh();
     },
 
     /******************************************************************************

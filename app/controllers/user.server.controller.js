@@ -12,17 +12,20 @@ var writeToRedis = function (doc) {
 var loginFromRedis = function (req,res,next) {
     redisClient.hgetall(REDIS_USER,function (err,doc) {
         if(err) return next(err);
-        //redis中没有则去数据库中拿
-        if(!doc) return loginFromDb(req,res,next);
-        var user = JSON.parse(doc[req.body.login_name]);
-        if(user&&user.login_name==req.body.login_name&&user.password==req.body.password){
-            Data.result = true;
-            Data.data = doc;
+        if(doc[req.body.login_name]){
+            var user = JSON.parse(doc[req.body.login_name]);
+            if(user&&user.login_name==req.body.login_name&&user.password==req.body.password){
+                Data.result = true;
+                Data.data = user;
+            }else{
+                Data.result = false;
+                Data.message = '用户名或密码错误';
+            }
+            return res.json(Data);
         }else{
-            Data.result = false;
-            Data.message = '用户名或密码错误';
+            //redis中没有则去数据库中拿
+            loginFromDb(req,res,next);
         }
-        return res.json(Data);
     })
 };
 var loginFromDb = function (req,res,next) {
