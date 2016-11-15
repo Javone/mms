@@ -40,7 +40,7 @@ var HomePage = React.createClass({
         }
     },
     componentWillMount: function () {
-        //this.handleRefresh();
+        this.handleRefresh();
     },
 
     /******************************************************************************
@@ -59,7 +59,7 @@ var HomePage = React.createClass({
             pageNow: parseInt(self.state.pageNow),
             pageSize: parseInt(self.state.pageSize)
         };
-        this.selectUserListByPageAPI(param, function (data) {
+        this.selectUserListAPI(param, function (data) {
             let pageNum = parseInt(data.count / (self.state.pageSize)) + 1;
             let array = [];
             for (let i = 0; i < pageNum; i++) {
@@ -157,7 +157,7 @@ var HomePage = React.createClass({
                     <td>{e.gender}</td>
                     <td>{e.age}</td>
                     <td>{e.position}</td>
-                    <td>{this.dateTransform(e.date.time)}</td>
+                    <td>{this.dateTransform(e.entry_date)}</td>
                 </tr>
             )
         });

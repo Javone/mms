@@ -44,7 +44,7 @@ function _request(url, type = 'post', params = {}, onSuccess, onFailed = functio
                     } else if (res.statusCode == 200) {
                         if (res.body) {
                             if (res.body.result) {
-                                onSuccess(res.body.data);
+                                onSuccess(res.body);
                             } else {
                                 onFailed(res.body.message);
                             }
@@ -70,11 +70,8 @@ module.exports = {
     registerAPI: function (params, onSuccess, onFailed) {
         _request('/api/register', 'post', params, onSuccess, onFailed);
     },
-    selectUserListByPageAPI: function (params, onSuccess, onFailed) {
-        _request('/api/user/select/list/page', 'post', params, onSuccess, onFailed);
-    },
     selectUserListAPI: function (params, onSuccess, onFailed) {
-        _request('/api/user/select/list', 'post', params, onSuccess, onFailed);
+        _request('/api/user/list', 'post', params, onSuccess, onFailed);
     },
     selectUserByIdAPI: function (params, onSuccess, onFailed) {
         _request('/api/user/select/user', 'post', params, onSuccess, onFailed);
