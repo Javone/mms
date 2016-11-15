@@ -11,8 +11,8 @@ const initialProps = {
         password:'',
         name:'',
         age:'',
-        gender:'',
-        position:'',
+        gender:'男',
+        position:'成员',
         entry_date:''
     },
     UserList:[]

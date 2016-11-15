@@ -57,29 +57,74 @@ var Register = React.createClass({
             });
         }
     },
-    handleKeyLogin: function (event) {
-        if (event.keyCode == 13) {
-            this.handleClickLogin();
-        }
-    },
     handleChangeName: function (event) {
         let param = {
-            login_name: event.target.value
+            name: event.target.value
         };
-        this.setState({
-            User: objectAssign(this.state.User, param)
-        });
+        this.changeStatus('User', param);
     },
     handleChangePassword: function (event) {
         let param = {
             password: event.target.value
         };
-        this.setState({
-            User: objectAssign(this.state.User, param)
-        });
+        this.changeStatus('User', param);
+    },
+    handleChangeLoginName: function (event) {
+        let param = {
+            login_name: event.target.value
+        };
+        this.changeStatus('User', param);
+    },
+    handleChangeGender: function (event) {
+        let param = {
+            gender: event.target.value
+        };
+        this.changeStatus('User', param);
+    },
+    handleChangeAge: function (event) {
+        let param = {
+            age: event.target.value
+        };
+        this.changeStatus('User', param);
     },
     handleClickRegister: function () {
-
+        let login_name = this.state.User.login_name;
+        let password = this.state.User.password;
+        let name = this.state.User.name;
+        let age = this.state.User.age;
+        let gender = this.state.User.gender;
+        let entry_date = this.refs.entry_date.value;
+        let self = this;
+        if (login_name == '') {
+            alert("请填写登录名");
+            return false;
+        } else if (password == '') {
+            alert("请填写密码");
+            return false;
+        } else if (name == '') {
+            alert("请填写姓名");
+            return false;
+        } else if (age == '') {
+            alert("请填写年龄");
+            return false;
+        } else if (gender == '') {
+            alert("请填写性别");
+            return false;
+        } else if (entry_date == '') {
+            alert("请填写入职日期");
+            return false;
+        } else {
+            let param = {
+                entry_date: self.transformDate(entry_date)
+            };
+            self.changeStatus('User', param, function () {
+                self.registerAPI(self.state.User, function (data) {
+                    alert('注册成功!');
+                }, function (error) {
+                    alert(error);
+                });
+            });
+        }
     },
 
     /******************************************************************************
@@ -94,30 +139,34 @@ var Register = React.createClass({
                             <div className="box-header with-border">
                                 <h3 className="box-title">注册页面</h3>
                             </div>
-                            <form role="form">
+                            <div role="form">
                                 <div className="box-body">
                                     <div className="form-group">
                                         <label>登录名</label>
-                                        <input type="text" className="form-control" placeholder="登录系统的登录名"/>
+                                        <input type="text" className="form-control" placeholder="登录系统的登录名"
+                                               onChange={this.handleChangeLoginName}/>
                                     </div>
                                     <div className="form-group">
                                         <label>密码</label>
-                                        <input type="password" className="form-control" placeholder="登录系统的密码"/>
+                                        <input type="password" className="form-control" placeholder="登录系统的密码"
+                                               onChange={this.handleChangePassword}/>
                                     </div>
                                     <div className="form-group">
                                         <label>姓名</label>
-                                        <input type="text" className="form-control" placeholder="姓名"/>
+                                        <input type="text" className="form-control" placeholder="姓名"
+                                               onChange={this.handleChangeName}/>
                                     </div>
                                     <div className="form-group">
                                         <label>性别</label>
-                                        <select className="form-control">
+                                        <select className="form-control" onChange={this.handleChangeGender}>
                                             <option>男</option>
                                             <option>女</option>
                                         </select>
                                     </div>
                                     <div className="form-group">
                                         <label>年龄</label>
-                                        <input type="text" className="form-control" placeholder="请输入整数"/>
+                                        <input type="text" className="form-control" placeholder="请输入整数"
+                                               onChange={this.handleChangeAge}/>
                                     </div>
                                     <div className="form-group">
                                         <label>入职日期</label>
@@ -125,14 +174,15 @@ var Register = React.createClass({
                                             <div className="input-group-addon">
                                                 <i className="fa fa-calendar"></i>
                                             </div>
-                                            <input type="text" className="form-control pull-right" id="datepicker"/>
+                                            <input type="text" className="form-control pull-right" id="datepicker"
+                                                   ref="entry_date"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="box-footer">
-                                    <button className="btn btn-primary">提交</button>
+                                    <button className="btn btn-primary" onClick={this.handleClickRegister}>提交</button>
                                 </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -36,38 +36,44 @@ var loginFromRedis = function (id, cb) {
         return cb(err, v);
     });
 };
-//往redis写数据
-var createIntoRedis = function () {
-    redisClient.set('user:id:'+id+':name', JSON.stringify(doc))
-};
 module.exports = {
-    create:function (req,res,next) {
-        if(!req.query.title || !req.query.content){
+    register: function (req, res, next) {
+        if (!req.body.login_name || !req.body.password || !req.body.name || !req.body.age || !req.body.gender || !req.body.position || !req.body.entry_date) {
             return next(new Error('params error'));
         }
-        req.models.post.create({title:req.query.title,content:req.query.content},function (err,doc) {
-            if(err) return next(err);
+        req.models.post.create({
+            login_name: req.body.login_name,
+            password: req.body.password,
+            name: req.body.name,
+            age: req.body.age,
+            gender: req.body.gender,
+            position: req.body.position,
+            entry_date: req.body.entry_date,
+        }, function (err, doc) {
+            if (err) return next(err);
             return res.json(doc);
         });
     },
-    login:function (req,res,next) {
-        if(!req.body.login_name || !req.body.password){
+    login: function (req, res, next) {
+        if (!req.body.login_name || !req.body.password) {
             return next(new Error('params error'));
         }
-        req.models.user.find({}).exec(function(err, users) {console.log('err,users',err,users)});
+        req.models.user.find({}).exec(function (err, users) {
+            console.log('err,users', err, users)
+        });
 
         var json = {
-            flag:1,
-            result:true
+            flag: 1,
+            result: true
         };
         return res.json(json);
     },
-    list:function (req,res,next) {
-        if(!req.body.login_name || !req.body.password){
+    list: function (req, res, next) {
+        if (!req.body.login_name || !req.body.password) {
             return next(new Error('params error'));
         }
-        req.models.user.create({title:req.query.title,content:req.query.content},function (err,doc) {
-            if(err) return next(err);
+        req.models.user.create({title: req.query.title, content: req.query.content}, function (err, doc) {
+            if (err) return next(err);
             return res.json(doc);
         });
     }

@@ -3,19 +3,25 @@
  */
 var Waterline = require('waterline');
 var mongoAdapter = require('sails-mongo');
+var mysqlAdapter = require('sails-mysql');
 var config = require('./config');
 
 var User = require('../app/models/user.server.model');
 var wlconfig = {
     adapters: {
         mongo: mongoAdapter,
-        default: 'mongo'
+        mysql:mysqlAdapter,
+        default: 'mysql'
     },
     connections: {
         mongo: {
             adapter: 'mongo',
             url: config.mongodb
-        }
+        },
+        mysql: {
+            adapter: 'mysql',
+            url: config.mysql
+        },
     }
 };
 var orm = new Waterline();//orm是将数据库中的数据转化成程序方便处理的对象,类似于mybatis-generator

@@ -11,7 +11,6 @@ import Api from "Api";
 import CommonFun from "CommonFun";
 var initialParams = require('InitialProps').User;
 import {replace, goBack, push} from 'redux-router';
-var objectAssign = require('object-assign');
 
 var Login = React.createClass({
 
@@ -62,21 +61,17 @@ var Login = React.createClass({
             this.handleClickLogin();
         }
     },
-    handleChangeName: function (event) {
+    handleChangeLoginName: function (event) {
         let param = {
             login_name:event.target.value
         };
-        this.setState({
-            User:objectAssign(this.state.User,param)
-        });
+        this.changeStatus('User',param);
     },
     handleChangePassword: function (event) {
         let param = {
             password:event.target.value
         };
-        this.setState({
-            User:objectAssign(this.state.User,param)
-        });
+        this.changeStatus('User',param);
     },
     handleClickRegister:function () {
         this.props.history.push(UserRoute.Register);
@@ -95,7 +90,7 @@ var Login = React.createClass({
                             <input type="text"
                                    className="form-control"
                                    placeholder="请输入登录名"
-                                   onChange={this.handleChangeName}/>
+                                   onChange={this.handleChangeLoginName}/>
                             <span className="glyphicon glyphicon-user form-control-feedback"></span>
                         </div>
                         <div className="form-group has-feedback">
@@ -106,12 +101,12 @@ var Login = React.createClass({
                             <span className="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div>
                         <div className="row">
-                            <div className="col-xs-12">
+                            <div className="col-xs-12" style={{display:'flex',alignItems:'center'}}>
                                 <button className="btn btn-primary btn-block btn-flat"
                                         style={{margin: '0 auto', width: '100px'}}
                                         onClick={this.handleClickLogin}>登录
                                 </button>
-                                <button onClick={this.handleClickRegister}>测试注册入口</button>
+                                <a href="/register.page">测试注册入口</a>
                             </div>
                         </div>
                     </div>

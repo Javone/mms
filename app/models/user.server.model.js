@@ -5,7 +5,7 @@ var Waterline = require('waterline');
 
 module.exports = Waterline.Collection.extend({
     identity:'user',//表名=集合名
-    connection:'mongo',//用哪个连接
+    connection:'mysql',//用哪个连接
     attributes:{//字段
        id:{type:'integer'},
        name:{type:'string'},

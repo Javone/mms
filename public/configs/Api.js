@@ -68,6 +68,9 @@ module.exports = {
     loginAPI: function (params, onSuccess, onFailed) {
         _request('/api/login', 'post', params, onSuccess, onFailed);
     },
+    registerAPI: function (params, onSuccess, onFailed) {
+        _request('/api/register', 'post', params, onSuccess, onFailed);
+    },
     selectUserListByPageAPI: function (params, onSuccess, onFailed) {
         _request('/api/user/select/list/page', 'post', params, onSuccess, onFailed);
     },
