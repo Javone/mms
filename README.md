@@ -13,13 +13,18 @@ npm run start<br/>
 server start => localhost:7101<br/>
 #主要功能
 1.登录<br/>
-2.查询(列表查询,个人查询:支持模糊查询)<br/>
-3.分页<br/>
-4.后续会继续完善<br/>
+2.注册<br/>
+3.查询(列表查询,个人查询:支持模糊查询)<br/>
+4.分页<br/>
+5.后续会继续完善<br/>
 #关键问题
 自学的nodejs,写的这个项目,所以处处不会,觉得处处都是关键,不过nodejs很适合前端童鞋开发,同maven_ssm,还是指出express服务器拦截react router的处理方法吧<br/>
 res.sendfile('public/index.html'),前端路由请求以*.page结尾,express服务器拦截此请求后分发到index.html处理,详见config/express.js
-
+#项目截图
+ ![image](https://github.com/Johnson-hd/mms/raw/master/public/static/images/project_1.png)<br/>
+ ![image](https://github.com/Johnson-hd/mms/raw/master/public/static/images/project_2.png)<br/>
+ ![image](https://github.com/Johnson-hd/mms/raw/master/public/static/images/project_3.png)<br/>
+ ![image](https://github.com/Johnson-hd/mms/raw/master/public/static/images/project_4.png)<br/>
 
 
 
