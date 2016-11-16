@@ -22,7 +22,7 @@ var HeaderLayout = React.createClass({
     render: function () {
         return (
             <header className="main-header">
-                <span  className="logo">H5管理后台</span>
+                <span  className="logo">人员管理后台</span>
                 <nav className="navbar navbar-static-top" role="navigation">
                     <a href="#" className="sidebar-toggle" data-toggle="offcanvas" role="button">
                         <span className="sr-only">Toggle navigation</span>

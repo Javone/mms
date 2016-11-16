@@ -3,7 +3,7 @@
  */
 var Waterline = require('waterline');
 var mongoAdapter = require('sails-mongo');
-var mysqlAdapter = require('sails-mysql');
+var mysqlAdapter = require('sails-mysql');//将数据库中的数据转化成程序方便处理的对象
 var config = require('./config');
 
 var User = require('../app/models/user.server.model');
@@ -27,7 +27,7 @@ var wlconfig = {
         migrate: 'safe'//创建的时候不会改动数据库的表,只能我们自己改动
     }
 };
-var orm = new Waterline();//orm是将数据库中的数据转化成程序方便处理的对象,类似于mybatis-generator
+var orm = new Waterline();
 orm.loadCollection(User);
 
 exports.wlconfig = wlconfig;

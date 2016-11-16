@@ -36,7 +36,9 @@ var HomePage = React.createClass({
             pageList: [],
             index: 1,
             disabled_p: true,
-            disabled_n: false
+            disabled_n: false,
+            isSearch:false,
+            name:''
         }
     },
     componentWillMount: function () {
@@ -59,22 +61,42 @@ var HomePage = React.createClass({
             pageNow: parseInt(self.state.pageNow),
             pageSize: parseInt(self.state.pageSize)
         };
-        this.selectUserListAPI(param, function (data) {
-            let pageNum = parseInt(data.count / (self.state.pageSize)) + 1;
-            let array = [];
-            for (let i = 0; i < pageNum; i++) {
-                let object = {};
-                object.pageNow = i + 1;
-                array.push(object);
-            }
-            self.setState({
-                UserList: data.list,
-                count: data.count,
-                pageList: array
+        if(self.state.isSearch){
+            param.name = self.state.name;
+            self.selectUserByNameAPI(param, function (data) {
+                let pageNum = parseInt(data.count / (self.state.pageSize)) + 1;
+                let array = [];
+                for (let i = 0; i < pageNum; i++) {
+                    let object = {};
+                    object.pageNow = i + 1;
+                    array.push(object);
+                }
+                self.setState({
+                    UserList: data.list,
+                    count: data.count,
+                    pageList: array
+                });
+            }, function (error) {
+                alert(error);
             });
-        }, function (error) {
-            alert(error);
-        });
+        }else{
+            self.selectUserListAPI(param, function (data) {
+                let pageNum = parseInt(data.count / (self.state.pageSize)) + 1;
+                let array = [];
+                for (let i = 0; i < pageNum; i++) {
+                    let object = {};
+                    object.pageNow = i + 1;
+                    array.push(object);
+                }
+                self.setState({
+                    UserList: data.list,
+                    count: data.count,
+                    pageList: array
+                });
+            }, function (error) {
+                alert(error);
+            });
+        }
     },
     handleClickSelectPage: function (event) {
         this.setState({
@@ -90,24 +112,26 @@ var HomePage = React.createClass({
             alert('请输入姓名进行查询!');
         } else {
             let param = {
-                name: this.refs.name.value
+                name: this.refs.name.value,
+                pageNow:1,
+                pageSize:10
             };
             this.selectUserByNameAPI(param, function (data) {
-                let pageNum = parseInt(1 / (self.state.pageSize)) + 1;
+                let pageNum = parseInt(data.count / (self.state.pageSize)) + 1;
                 let array = [];
                 for (let i = 0; i < pageNum; i++) {
                     let object = {};
                     object.pageNow = i + 1;
                     array.push(object);
                 }
-                let array2= [];
-                array2.push(data.user);
                 self.setState({
-                    UserList: array2,
-                    count: 1,
+                    UserList: data.list,
+                    count: data.count,
                     index: 1,
                     pageNow: 1,
-                    pageList: array
+                    pageList: array,
+                    isSearch:true,
+                    name:self.refs.name.value
                 });
             }, function (error) {
                 alert(error);

@@ -25,7 +25,8 @@ module.exports = Waterline.Collection.extend({
         },
         name: {
             type: 'string',
-            required: true
+            required: true,
+            index: true
         },
         age: {
             type: 'string',

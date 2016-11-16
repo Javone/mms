@@ -124,16 +124,24 @@ module.exports = {
     },
     name: function (req, res, next) {
         if (!req.body.name) return next(new Error('params error'));
-        req.models.user.findOne({name: req.body.name}, function (err, doc) {
-            if (err) return next(err);
-            if (!doc) {
-                Data.result = false;
-                Data.message = '未查到该用户';
-            } else {
-                Data.result = true;
-                Data.user = doc;
-            }
-            return res.json(Data);
-        });
+        req.models.user.find({name: {'like': '%' + req.body.name + '%'}})
+            .skip((req.body.pageNow - 1 ) * req.body.pageSize) //跳过前几页的数据
+            .limit(req.body.pageSize) //取多少条数据
+            .exec(function (err, doc) {
+                if (err) return next(err);
+                if (!doc) {
+                    Data.result = false;
+                    Data.message = '未查到该用户';
+                } else {
+                    Data.result = true;
+                    Data.list = doc;
+                    req.models.user.find({name: {'like': '%' + req.body.name + '%'}})
+                        .exec(function (err, doc) {
+                            if (err) return next(err);
+                            Data.count = doc.length;
+                            return res.json(Data);
+                        })
+                }
+            });
     }
 };
